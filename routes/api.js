@@ -1,12 +1,21 @@
 var express = new require('express');
 var router = express.Router();
 var ZoneController = require('../controllers/ZoneController')
+var controllers  = require('../controllers')
 
 router.get('/:resource',function(req, res, next){
 	var resource = req.params.resource
-	if(resource=='zone'){
-		ZoneController.find(req.query,function(err, results){
-			if(err){
+	var controller = controllers[resource]
+
+	if(controller == null){
+		res.json({
+			confirmation: 'fail',
+			message: 'Invalid resource request'
+		})
+	}
+
+	controller.find(req.query,function(err, results){
+		if(err){
 				res.json({
 					confirmation: 'fail',
 					message: err
@@ -20,8 +29,27 @@ router.get('/:resource',function(req, res, next){
 			})
 
 			return
-		})
-	}
+	})
+
+
+	// if(resource=='zone'){
+	// 	ZoneController.find(req.query,function(err, results){
+	// 		if(err){
+	// 			res.json({
+	// 				confirmation: 'fail',
+	// 				message: err
+	// 			})
+	// 			return
+	// 		}
+			
+	// 		res.json({
+	// 			confirmation: 'success',
+	// 			results: results
+	// 		})
+
+	// 		return
+	// 	})
+	// }
 
 
 	return
