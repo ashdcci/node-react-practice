@@ -10,7 +10,7 @@ class Zone extends Component {
 		return( 
 			<div style={style.container}> 
 			<h2 style={style.h2Header}>
-				<a class="abb" style={style.h2Header_a} href="#">{this.props.currentZone.name}</a>
+				<a className="abb" style={style.h2Header_a} href="#">{this.props.currentZone.name}</a>
 			</h2>
 	<span className="detail">{zipCode}</span><br/> 
 	<span className="detail">{this.props.currentZone.numComments} comments</span>

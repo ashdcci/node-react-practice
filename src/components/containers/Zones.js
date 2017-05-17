@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Zone from '../presentation/Zone'
+import {CreateZone, Zone} from '../presentation'
 import superagent from 'superagent'
 import { APIManager } from '../../utils'
 
@@ -51,11 +51,11 @@ class Zones extends Component {
 	}
 
 
-	submitZone(e){
+	submitZone(zone){
 
-		console.log('submitComment: '+JSON.stringify(this.state.zone))
+		console.log('submitComment: '+JSON.stringify(zone))
 
-		let updatedZone = Object.assign({}, this.state.zone)
+		let updatedZone = Object.assign({}, zone)
 		updatedZone['zipCodes'] = updatedZone.zipCode.split(',')
 		APIManager.post('/api/zone', updatedZone, (err, response) => {
 			if(err){
@@ -106,10 +106,7 @@ class Zones extends Component {
 				<ol>
 					{listItems}
 				</ol>
-				<input type="text" id="name" className="form-control" placeholder="Zone" onChange={this.updateZone.bind(this)} /><br/>
-				<input type="text" id="zipCode" placeholder="ZipCode" className="form-control" onChange={this.updateZone.bind(this)} /><br/>
-				<button onClick={this.submitZone.bind(this)} className="btn btn-info">Submit Zone</button> 
-
+				<CreateZone onCreate={this.submitZone.bind(this)} />
 			</div>
 		)
 	}
